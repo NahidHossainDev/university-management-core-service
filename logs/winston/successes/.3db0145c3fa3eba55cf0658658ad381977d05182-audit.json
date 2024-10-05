@@ -6,14 +6,9 @@
     "auditLog": "D:\\WebDev\\Programming_Hero_Next_Level\\Practice\\university-management-core-service-starter\\logs\\winston\\successes\\.3db0145c3fa3eba55cf0658658ad381977d05182-audit.json",
     "files": [
         {
-            "date": 1728029650554,
-            "name": "D:\\WebDev\\Programming_Hero_Next_Level\\Practice\\university-management-core-service-starter\\logs\\winston\\successes\\phu-2024-04-10-14-success.log",
-            "hash": "aed8545eb4d1f005a3400dc488da9d3af8269c774c3e39e6b931dcb0193824e9"
-        },
-        {
-            "date": 1728033227049,
-            "name": "D:\\WebDev\\Programming_Hero_Next_Level\\Practice\\university-management-core-service-starter\\logs\\winston\\successes\\phu-2024-04-10-15-success.log",
-            "hash": "799036e83367a692aa1d04a59a5522a1ca9f025948a11f227c1fa48fddbb17c3"
+            "date": 1728116907720,
+            "name": "D:\\WebDev\\Programming_Hero_Next_Level\\Practice\\university-management-core-service-starter\\logs\\winston\\successes\\phu-2024-05-10-14-success.log",
+            "hash": "ad9ac3b07cf3aab293962eeee4a594e1973d4095112cb502feb12646efb81a80"
         }
     ],
     "hashType": "sha256"
