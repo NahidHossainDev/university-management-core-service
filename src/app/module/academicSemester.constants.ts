@@ -22,3 +22,17 @@ export const semesterTypeCodeMapper = {
   AUTUMN: '02',
   FALL: '03',
 };
+
+export const semesterSearchableFields = [
+  'title',
+  'code',
+  'startMonth',
+  'endMonth',
+];
+
+export const semesterFilterableFields = [
+  'searchTerm',
+  'code',
+  'startMonth',
+  'endMonth',
+];

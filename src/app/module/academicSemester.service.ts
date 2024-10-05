@@ -1,7 +1,9 @@
-import { AcademicSemester, PrismaClient } from '@prisma/client';
+import { AcademicSemester, Prisma } from '@prisma/client';
+import { paginationHelpers } from '../../helpers/paginationHelper';
 import { IGenericResponse } from '../../interfaces/common';
-
-const prisma = new PrismaClient();
+import { IPaginationOptions } from '../../interfaces/pagination';
+import { prisma } from '../../shared/prisma';
+import { semesterSearchableFields } from './academicSemester.constants';
 
 const insertIntoDB = async (
   data: AcademicSemester
@@ -12,15 +14,51 @@ const insertIntoDB = async (
   return result;
 };
 
-const getAllSemesters = async (): Promise<
-  IGenericResponse<AcademicSemester[]>
-> => {
-  const data = await prisma.academicSemester.findMany();
+const getAllSemesters = async (
+  filters: any,
+  options: IPaginationOptions
+): Promise<IGenericResponse<AcademicSemester[]>> => {
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelpers.calculatePagination(options);
+  const { searchTerm, ...otherFilters } = filters;
+
+  const andConditions = [];
+
+  if (searchTerm) {
+    andConditions.push({
+      OR: semesterSearchableFields.map(field => ({
+        [field]: {
+          contains: searchTerm,
+          mode: 'insensitive',
+        },
+      })),
+    });
+  }
+  if (Object.keys(otherFilters).length > 0) {
+    andConditions.push({
+      AND: Object.entries(otherFilters).map(([key, value]) => ({
+        [key]: { equals: value },
+      })),
+    });
+  }
+
+  const whereCondition: Prisma.AcademicSemesterWhereInput =
+    andConditions.length > 0 ? { AND: andConditions } : {};
+
+  const data = await prisma.academicSemester.findMany({
+    where: whereCondition,
+    skip,
+    take: limit,
+    orderBy: {
+      [sortBy]: sortOrder,
+    },
+  });
+
   const total = await prisma.academicSemester.count();
   return {
     meta: {
-      page: 1,
-      limit: 10,
+      page,
+      limit,
       total,
     },
     data,
