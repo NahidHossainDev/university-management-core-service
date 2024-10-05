@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import validateRequest from '../middlewares/validateRequest';
+import validateRequest from '../../middlewares/validateRequest';
 import { AcademicSemesterController } from './academicSemester.controller';
 import { AcademicSemesterValidation } from './academicSemester.validation';
 
@@ -11,6 +11,8 @@ router.post(
   AcademicSemesterController.insertIntoDB
 );
 
-router.get('/all', AcademicSemesterController.getAllSemesters);
+router.get('/all', AcademicSemesterController.getAllData);
+
+router.get('/:id', AcademicSemesterController.getDataById);
 
 export const AcademicSemesterRoutes = router;
