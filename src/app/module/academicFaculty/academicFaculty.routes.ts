@@ -31,4 +31,4 @@ router.delete(
   AcademicFacultyController.deleteById
 );
 
-export const AcademicSemesterRoutes = router;
+export const AcademicFacultyRoutes = router;
