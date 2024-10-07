@@ -79,6 +79,11 @@ const getAllFromDB = async (
 const getByIdFromDB = async (id: string): Promise<Student | null> => {
   const result = await prisma.student.findUnique({
     where: { id },
+    include: {
+      academicDepartment: true,
+      academicFaculty: true,
+      academicSemester: true,
+    },
   });
   return result;
 };
