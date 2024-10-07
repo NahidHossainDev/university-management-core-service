@@ -12,6 +12,11 @@ import {
 const insertIntoDB = async (data: Student): Promise<Student> => {
   const result = await prisma.student.create({
     data,
+    include: {
+      academicDepartment: true,
+      academicFaculty: true,
+      academicSemester: true,
+    },
   });
   return result;
 };
@@ -92,13 +97,26 @@ const updateIntoDB = async (
   id: string,
   data: Partial<Student>
 ): Promise<Student> => {
-  const result = await prisma.student.update({ where: { id }, data });
+  const result = await prisma.student.update({
+    where: { id },
+    data,
+    include: {
+      academicDepartment: true,
+      academicFaculty: true,
+      academicSemester: true,
+    },
+  });
   return result;
 };
 
 const deleteFromDB = async (id: string): Promise<Student> => {
   const result = await prisma.student.delete({
     where: { id },
+    include: {
+      academicDepartment: true,
+      academicFaculty: true,
+      academicSemester: true,
+    },
   });
   return result;
 };
