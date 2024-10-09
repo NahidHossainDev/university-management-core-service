@@ -66,7 +66,7 @@ const deleteByIdFromDB = catchAsync(async (req: Request, res: Response) => {
 const assignFaculty = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
 
-  const result = await CourseService.assignFaculty(id, req.body.facultyIds);
+  const result = await CourseService.assignFaculty(id, req.body.faculties);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

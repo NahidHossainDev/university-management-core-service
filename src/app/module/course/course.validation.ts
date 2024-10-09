@@ -37,7 +37,16 @@ const update = z.object({
   }),
 });
 
+const assignFaculty = z.object({
+  body: z.object({
+    faculties: z.array(z.string(), {
+      required_error: 'Faculty is required',
+    }),
+  }),
+});
+
 export const CourseValidation = {
   create,
   update,
+  assignFaculty,
 };
