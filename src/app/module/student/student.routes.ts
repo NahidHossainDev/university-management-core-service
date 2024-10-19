@@ -16,6 +16,12 @@ router.post(
 
 router.get('/all', StudentController.getAllData);
 
+router.get(
+  '/my-courses',
+  auth(ENUM_USER_ROLE.STUDENT),
+  StudentController.myCourses
+);
+
 router.get('/:id', StudentController.getDataById);
 
 router.patch(
