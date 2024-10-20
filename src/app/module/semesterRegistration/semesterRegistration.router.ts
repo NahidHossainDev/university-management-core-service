@@ -7,6 +7,12 @@ import { SemesterRegistrationValidation } from './semesterRegistration.validatio
 
 const router = Router();
 
+router.get(
+  '/get-my-semester-courses',
+  auth(ENUM_USER_ROLE.STUDENT),
+  SemesterRegistrationController.getMySemesterRegCourses
+);
+
 router.get('/', SemesterRegistrationController.getAllData);
 router.get('/:id', SemesterRegistrationController.getAllData);
 
