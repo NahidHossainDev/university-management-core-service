@@ -3,7 +3,13 @@ import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import { prisma } from '../../../shared/prisma';
-import { semesterSearchableFields } from './academicSemester.constants';
+import { RedisClient } from '../../../shared/redis';
+import {
+  EVENT_ACADEMIC_SEMESTER_CREATED,
+  EVENT_ACADEMIC_SEMESTER_DELETED,
+  EVENT_ACADEMIC_SEMESTER_UPDATED,
+  semesterSearchableFields,
+} from './academicSemester.constants';
 
 const insertIntoDB = async (
   data: AcademicSemester
@@ -11,6 +17,13 @@ const insertIntoDB = async (
   const result = await prisma.academicSemester.create({
     data,
   });
+  if (result) {
+    await RedisClient.publish(
+      EVENT_ACADEMIC_SEMESTER_CREATED,
+      JSON.stringify(result)
+    );
+  }
+
   return result;
 };
 
@@ -77,6 +90,12 @@ const updateIntoDB = async (
   data: Partial<AcademicSemester>
 ): Promise<AcademicSemester> => {
   const result = await prisma.academicSemester.update({ where: { id }, data });
+  if (result) {
+    await RedisClient.publish(
+      EVENT_ACADEMIC_SEMESTER_UPDATED,
+      JSON.stringify(result)
+    );
+  }
   return result;
 };
 
@@ -84,6 +103,12 @@ const deleteFromDB = async (id: string): Promise<AcademicSemester> => {
   const result = await prisma.academicSemester.delete({
     where: { id },
   });
+  if (result) {
+    await RedisClient.publish(
+      EVENT_ACADEMIC_SEMESTER_DELETED,
+      JSON.stringify(result)
+    );
+  }
   return result;
 };
 
